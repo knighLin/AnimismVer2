@@ -45,7 +45,6 @@ public class PlayerManager : MonoBehaviour
     {
         switch (TypeTag)
         {
-
             case "Human":
                 NowType = "Human";
                 PreviousType = Previous;
