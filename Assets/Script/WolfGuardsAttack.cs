@@ -8,7 +8,7 @@ public class WolfGuardsAttack : MonoBehaviour {
     private float Atk = 10;
 
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "Enemy")
         {

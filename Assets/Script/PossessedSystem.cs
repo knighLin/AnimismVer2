@@ -197,8 +197,7 @@ public class PossessedSystem : MonoBehaviour
             AttachedBody.GetComponent<PossessedSystem>().Possessor = Possessor;
             Possessor.SetActive(false);//關掉人型態的任何事
             OnPossessed = true;//已附身
-
-
+            
             if (AttachedBody.tag == "Wolf")
             {
                 WolfCount++;
@@ -221,7 +220,6 @@ public class PossessedSystem : MonoBehaviour
                     playerManager.TurnType("Wolf", PreviousTag);
                     break;
             }
-            Debug.Log("5");
         }
     }
 

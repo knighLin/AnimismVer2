@@ -28,7 +28,7 @@ public class PlayerManager : MonoBehaviour
         {
             switch (NowType)
             {//給予回應 //判斷目前形態為何，不同型態應有不同數值
-                case "Player":
+                case "Human":
                     typevalue.HumanVal();
                     break;
                 case "Bear":
@@ -45,9 +45,8 @@ public class PlayerManager : MonoBehaviour
     {
         switch (TypeTag)
         {
-
             case "Human":
-                NowType = "Player";
+                NowType = "Human";
                 PreviousType = Previous;
                 break;
 

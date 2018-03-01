@@ -23,7 +23,7 @@ public class LoadData : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
-        SpawnAllObject();
+       // SpawnAllObject();
     }
 	
 	// Update is called once per frame
