@@ -8,7 +8,7 @@ public class CameraScript : MonoBehaviour
     private PossessedSystem PossessedSystem;
     private PlayerManager playerManager;
     public GameObject PossessTarget;
-    public GameObject PossessEffect, Crosshairs;
+    public GameObject SoulVisionEffect, PossessEffect, Crosshairs, SoulPower;
     public GameObject NowCharacter;
     public GameObject MoveEnd, PlayerView;
     public Transform[] AttachedBodyChildren;
@@ -33,8 +33,11 @@ public class CameraScript : MonoBehaviour
     void Start()
     {
         PossessedSystem = GameObject.Find("Pine").GetComponent<PossessedSystem>();
+        SoulPower= GameObject.Find("SoulPower");
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-        PossessEffect.SetActive(false);//開始時靈視關閉
+        SoulVisionEffect.SetActive(false);//開始時靈視關閉
+        PossessEffect.SetActive(false);//開始時附身鏡頭關閉
+        SoulPower.SetActive(false);//開始時靈視特效關閉
         Crosshairs.SetActive(false);//開始時準心關閉
         CameraState = "NormalState";//初始狀態為正常狀態
         AttachedBodyChildren = new Transform[3];//只抓前四個物件(包含本身)
@@ -48,7 +51,7 @@ public class CameraScript : MonoBehaviour
     void FixedUpdate()
     {
         if (!IsPossessing) CameraRotate();//如果不是附身模式讓鏡頭可以轉
-        NormalPosition = RotationEuler * new Vector3(0, 1, -3f) + PlayerView.transform.position;//每幀確認鏡頭正常的位置 讓前進後退順暢
+        NormalPosition = RotationEuler * new Vector3(0, 0, -3f) + PlayerView.transform.position;//每幀確認鏡頭正常的位置 讓前進後退順暢
         switch (CameraState)
         {
             case "NormalState":
@@ -71,6 +74,7 @@ public class CameraScript : MonoBehaviour
     }
     public void ResetValue()//重置一些前進後退中用到的值 以防下次進入其他模式出問題
     {
+        SoulPower.SetActive(false);
         CanPossess = false;//不能附身
         IsPossessing = false;//可以進入靈視
         FowardAndBackTime = 0;//前進後退的計時為0
@@ -134,6 +138,7 @@ public class CameraScript : MonoBehaviour
             CameraState = "SoulVisionOver";
         if (FowardAndBackTime < FowardStop)//0.25秒移動到到指定位置
         {
+            SoulPower.SetActive(true);
             FowardAndBackTime += Time.deltaTime;
             VectorMoveDistance = MoveEnd.transform.position - NormalPosition;//距離為終點減正常位置
             Move = VectorMoveDistance * Time.deltaTime * 5;
@@ -146,14 +151,15 @@ public class CameraScript : MonoBehaviour
             FowardAndBackTime = FowardStop;
             CameraNowPosition = MoveEnd.transform.position;
             transform.position = MoveEnd.transform.position;
-            PossessEffect.SetActive(true);
+            SoulVisionEffect.SetActive(true);
             Crosshairs.SetActive(true);
             CanPossess = true;
         }
     }
     public void SoulVisionOver()//鏡頭後退為正常狀態
     {
-        PossessEffect.SetActive(false);
+        SoulPower.SetActive(false);
+        SoulVisionEffect.SetActive(false);
         Crosshairs.SetActive(false);
         CanPossess = false;
         if (FowardAndBackTime > 0)//從移動到的位置退回正常位置
@@ -170,6 +176,8 @@ public class CameraScript : MonoBehaviour
     }
     public void GettingPossess()
     {
+        SoulVisionEffect.SetActive(false);
+
         if (PossessTime < 0.2)//鏡頭回到正常的位置
         {
             PossessTime += Time.deltaTime;
@@ -184,6 +192,7 @@ public class CameraScript : MonoBehaviour
 
             if (PossessTime >= 0.6 && PossessTime < 0.8)
             {
+                PossessEffect.SetActive(true);
                 VectorMoveDistance = PossessTarget.transform.position - NormalPosition;//距離為終點減正常位置
                 Move = VectorMoveDistance * Time.deltaTime * 3;
                 transform.position += Move;
@@ -192,6 +201,7 @@ public class CameraScript : MonoBehaviour
         }
         else if (PossessTime >= 0.8)
         {
+            PossessEffect.SetActive(false);
             PossessedSystem.InToPossess();
             LoadCharacterPosition();//讀取動物鏡頭位置
             CameraState = "NormalState";

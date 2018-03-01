@@ -35,6 +35,8 @@ public class PossessedSystem : MonoBehaviour
     }
     private void OnEnable()//當打開程式，呼叫當前正開啟的物件的附身範圍和移動
     {
+        if (!Possessor)
+            Possessor = GameObject.Find("Pine");
         playerMovement = GetComponent<PlayerMovement>();
         PossessedCol = GetComponent<SphereCollider>();
     }

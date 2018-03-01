@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class WolfGuardsAi : MonoBehaviour
 {
-
     private EnemyHealth enemyHealth;
     private GameObject Target;
     private NavMeshAgent Nav;
