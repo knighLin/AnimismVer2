@@ -1,8 +1,6 @@
-*.tga
-*.ide
-*.sln
-*.db
-*.log
+
 *.info
 Library/
 Temp/
+.vs/
+UnityPackageManager/
