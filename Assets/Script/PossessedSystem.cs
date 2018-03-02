@@ -183,6 +183,15 @@ public class PossessedSystem : MonoBehaviour
             playerManager.NowCharacter = AttachedBody;
             // AttachedBody = hit.collider.gameObject;//點擊到的附身物等於AttachedBody
             playerManager.PossessType = AttachedBody.tag;
+            switch (AttachedBody.transform.tag)
+            {//將附身物的標籤傳到管理者，方便變換動物數值
+                case "BearMaster":
+                    playerManager.TurnType("Bear", PreviousTag);
+                    break;
+                case "WolfMaster":
+                    playerManager.TurnType("Wolf", PreviousTag);
+                    break;
+            }
             AttachedBody.tag = "Player";
             //附身者的位置到新被附身物的位置
             Possessor.transform.position = new Vector3(AttachedBody.transform.position.x,
@@ -211,15 +220,7 @@ public class PossessedSystem : MonoBehaviour
             //animalHealth = AttachedBody.GetComponent<AnimalHealth>();
             //animalHealth.LinkHP();
 
-            switch (AttachedBody.transform.tag)
-            {//將附身物的標籤傳到管理者，方便變換動物數值
-                case "Bear":
-                    playerManager.TurnType("Bear", PreviousTag);
-                    break;
-                case "Wolf":
-                    playerManager.TurnType("Wolf", PreviousTag);
-                    break;
-            }
+
         }
     }
 

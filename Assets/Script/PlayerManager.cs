@@ -31,10 +31,10 @@ public class PlayerManager : MonoBehaviour
                 case "Human":
                     typevalue.HumanVal();
                     break;
-                case "Bear":
+                case "BearMaster":
                     typevalue.BearVal();
                     break;
-                case "Wolf":
+                case "WolfMaster":
                     typevalue.WolfVal();
                     break;
             }

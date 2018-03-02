@@ -13,6 +13,7 @@ public class CameraScript : MonoBehaviour
     public GameObject MoveEnd, PlayerView;
     public Transform[] AttachedBodyChildren;
     public Quaternion RotationEuler;
+    public Quaternion SaveRotationEuler;
     public Vector3 NormalPosition;//鏡頭正常位置
     public Vector3 RedressVector = Vector3.zero;
     public Vector3 Move;//鏡頭"每次"前進/後退的距離
@@ -29,6 +30,7 @@ public class CameraScript : MonoBehaviour
     public bool CanPossess = false;//靈視狀態下才會為true 代表可以附身;
     public bool IsPossessing = false;//附身中為true直到附身結束切回正常狀態才會被重置為false
 
+
     // Use this for initialization
     void Start()
     {
@@ -44,7 +46,6 @@ public class CameraScript : MonoBehaviour
         PlayerView = GameObject.Find("FirstPersonCamPoint");
         MoveEnd = GameObject.Find("CamMoveEndPoint");//一開始取正確腳色位置
         NowCharacter = GameObject.Find("Pine");
-        //NormalPosition = GameObject.Find("Pine").transform.rotation * new Vector3(0, 1, -3f) + PlayerView.transform.position;//一開始取得讀取角度
     }
 
     // Update is called once per frame

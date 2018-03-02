@@ -8,26 +8,34 @@ public class LoadData : MonoBehaviour {
     public GameObject LoadingCanvas;
     public GameObject PlayerPrefab, WolfPrefab, EnemyPrefab;
     public GameObject Wolf;
-    public List<int> AnimalState;
-    public List<Vector3> AnimalVector3;
-    public List<Quaternion> AnimalQuaternion;
+    public List<int> WolfState;
+    public List<Vector3> WolfVector3;
+    public List<Quaternion> WolfQuaternion;
     public List<int> EnemyState;
     public List<Vector3> EnemyVector3;
     public List<Quaternion> EnemyQuaternion;
     public string PlayerState;
     public Vector3 PlayerVector3;
     public Quaternion PlayerQuaternion;
+    public float SaveRotx, SaveRoty;
     public Slider LoadingSlider;
     private AsyncOperation _async;
     public string LoadSelectedData;
+    private CameraScript CameraScript;
 
     // Use this for initialization
     void Awake () {
-       // SpawnAllObject();
+        SpawnAllObject();
     }
-	
-	// Update is called once per frame
-	void Update () {
+    private void Start()
+    {
+        CameraScript = GameObject.Find("Main Camera").GetComponent<CameraScript>();
+        CameraScript.rotX = SaveRotx;
+        CameraScript.rotY = SaveRoty;
+    }
+
+    // Update is called once per frame
+    void Update () {
 
     }
 
@@ -60,23 +68,33 @@ public class LoadData : MonoBehaviour {
         }
         SaveData.Data Load = (SaveData.Data)IOHelper.GetData(Application.persistentDataPath+ @"\Save\"+ LoadSelectedData + ".sav", typeof(SaveData.Data));
         Debug.Log("讀取了" + LoadSelectedData);
-        for (int A =0 ; A< Load.AnimalState.Count; A++)     //讀取動物數據
+        PlayerState = Load.PlayerState;
+        PlayerVector3 = Load.PlayerVector3;
+        PlayerQuaternion = Load.PlayerQuaternion;
+        SaveRotx = Load.SaveRotx;
+        SaveRoty = Load.SaveRoty;
+
+        Instantiate(PlayerPrefab, PlayerVector3, PlayerQuaternion).name = "Pine";
+        Debug.Log("讀取了派恩的位置,座標為" + PlayerVector3);
+        for (int A =0 ; A< Load.WolfState.Count; A++)     //讀取動物數據
         {
-            AnimalState.Add(Load.AnimalState[A]);           //讀取動物狀態
-            AnimalVector3.Add(Load.AnimalVector3[A]);       //讀取動物座標
-            AnimalQuaternion.Add(Load.AnimalQuaternion[A]); //讀取動物旋轉角度
-            if (AnimalState[A]==1)                          //如果動物活著(AnimalState=1)才生成
+            WolfState.Add(Load.WolfState[A]);           //讀取動物狀態
+            WolfVector3.Add(Load.WolfVector3[A]);       //讀取動物座標
+            WolfQuaternion.Add(Load.WolfQuaternion[A]); //讀取動物旋轉角度
+            if (WolfState[A]==1)                          //如果動物活著(WolfState=1)才生成
             {
-                Instantiate(WolfPrefab, AnimalVector3[A], AnimalQuaternion[A]).name="Wolf"+A;
-                Debug.Log("讀取了第" + (A + 1) + "隻狼," + "狀態為" + AnimalState[A] + ",座標為" + AnimalVector3[A]);
+                Instantiate(WolfPrefab, WolfVector3[A], WolfQuaternion[A]).name="Wolf"+A;
+                Debug.Log("讀取了第" + (A + 1) + "隻狼," + "狀態為" + WolfState[A] + ",座標為" + WolfVector3[A]);
             }
-            if (AnimalState[A] == 2)                        //如果動物被附身(AnimalState=2)生成後掛在主角身上
+            if (WolfState[A] == 2)                        //如果動物被附身(WolfState=2)生成後把主角掛在狼身上
             {
-                Wolf = Instantiate(WolfPrefab, GameObject.Find("Player").transform.position, Quaternion.identity);
-                Wolf.transform.parent = GameObject.Find("Player").transform;
+                Wolf = Instantiate(WolfPrefab, GameObject.Find("Pine").transform.position, Quaternion.identity);
+                GameObject.Find("Pine").transform.parent = Wolf.transform;
+                GameObject.Find("Pine").SetActive(false);
+                Debug.Log("讀取了第" + (A + 1) + "隻狼," + "狀態為" + WolfState[A] + ",座標為" + WolfVector3[A]);
             }
-            //Debug.Log(D1.AnimalVector3[A]);
-            //Debug.Log("讀" + AnimalVector3[A]);
+            //Debug.Log(D1.WolfVector3[A]);
+            //Debug.Log("讀" + WolfVector3[A]);
         }
 
         for (int E = 0; E < Load.EnemyState.Count; E++)   //讀取敵人數據
@@ -90,11 +108,7 @@ public class LoadData : MonoBehaviour {
                 Debug.Log("讀取了第" + (E + 1) + "個敵人," + "狀態為" + EnemyState[E] + ",座標為" + EnemyVector3[E]);
             }
         }
-         PlayerState = Load.PlayerState;
-         PlayerVector3 = Load.PlayerVector3;
-         PlayerQuaternion = Load.PlayerQuaternion;
-         Instantiate(PlayerPrefab, PlayerVector3,PlayerQuaternion).name = "Pine";
-         Debug.Log("讀取了派恩的位置,座標為" + PlayerVector3);
+
 
 
     }
