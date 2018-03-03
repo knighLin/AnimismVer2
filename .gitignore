@@ -1,13 +1,7 @@
-<<<<<<< HEAD
-*.tga
-=======
 
->>>>>>> origin/master
+*.tga
 *.info
 Library/
 Temp/
 .vs/
-<<<<<<< HEAD
-=======
 UnityPackageManager/
->>>>>>> origin/master
