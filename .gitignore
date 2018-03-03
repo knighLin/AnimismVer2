@@ -1,10 +1,5 @@
 *.tga
-*.asset
-*.ide
-*.sln
-*.csproj
-*.db
-*.log
 *.info
 Library/
 Temp/
+.vs/
