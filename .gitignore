@@ -1,7 +1,7 @@
-
 *.tga
 *.info
 Library/
 Temp/
 .vs/
 UnityPackageManager/
+
