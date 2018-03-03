@@ -161,7 +161,7 @@ Material:
     - _GlitterShown: 1
     - _GlitterTiling: 1
     - _GlossMapScale: 1
-    - _GlossMax: 0
+    - _GlossMax: 1
     - _GlossMin: 0
     - _Glossiness: 0.5
     - _Glossiness2: 1
@@ -172,7 +172,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 0.2
     - _OcclusionStrength2: 0
-    - _Occlusion_from_albedo_alpha: 0
+    - _Occlusion_from_albedo_alpha: 1
     - _POM: 0
     - _POMCurvatureType: 0
     - _POMPrecomputedFlag: 0
@@ -302,5 +302,5 @@ Material:
     - _WetnessColor: {r: 0, g: 0, b: 0, a: 0}
     - _WetnessSpecGloss: {r: 0.05, g: 0.05, b: 0.05, a: 0.7}
     - bumpMap2TexelSize: {r: 1, g: 1, b: 1, a: 1}
-    - bumpMapTexelSize: {r: 0.00048828125, g: 0.00048828125, b: 2048, a: 2048}
+    - bumpMapTexelSize: {r: 1, g: 1, b: 1, a: 1}
     - heightMapTexelSize: {r: 1, g: 1, b: 1, a: 1}
